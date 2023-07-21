@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Main CloudFormation stack that links to parameters
 
-Transform: 'AWS::Include'
+#Transform: 'AWS::Include'
 Parameters:
 #  AMI:
 #    Type: String
