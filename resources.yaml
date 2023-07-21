@@ -12,7 +12,7 @@ Parameters:
   AMI:
     Description: Amazon Machine Image ID
     Type: String
-    Default: "ami-04823729c75214919"  # Inserisci l'AMI ID desiderato qui
+    Default: "ami-0d224d471ed421020"  # Inserisci l'AMI ID desiderato qui
 
   InstanceType:
     Description: Type of EC2 instance
