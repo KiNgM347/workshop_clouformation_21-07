@@ -3,12 +3,27 @@ Description: Main CloudFormation stack that links to parameters
 
 Transform: 'AWS::Include'
 Parameters:
+#  AMI:
+#    Type: String
+
+#  InstanceType:
+#    Type: String
+
   AMI:
+    Description: Amazon Machine Image ID
     Type: String
+    Default: "ami-0abcdef1234567890"  # Inserisci l'AMI ID desiderato qui
 
   InstanceType:
+    Description: Type of EC2 instance
     Type: String
-
+    Default: "t3.micro"  # Inserisci il tipo di istanza EC2 desiderato qui
+    AllowedValues:
+      - "t2.micro"
+      - "t2.small"
+      - "t3.micro"
+      - "t3.small"
+      
 Resources:
   MyVPC:
     Type: AWS::EC2::VPC

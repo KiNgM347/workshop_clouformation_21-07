@@ -11,12 +11,7 @@
         "Description": "Type of EC2 instance",
         "Type": "String",
         "Default": "t3.micro",
-        "AllowedValues": [
-          "t2.micro",
-          "t2.small",
-          "t3.micro",
-          "t3.small"
-        ]
+        "AllowedValues": ["t2.micro", "t2.small", "t3.micro", "t3.small"]
       }
     }
   }
