@@ -12,7 +12,7 @@ Parameters:
   AMI:
     Description: Amazon Machine Image ID
     Type: String
-    Default: "ami-0d224d471ed421020"  # Inserisci l'AMI ID desiderato qui
+    Default: "ami-06935448000742e6b"  # Inserisci l'AMI ID desiderato qui
 
   InstanceType:
     Description: Type of EC2 instance
@@ -106,9 +106,7 @@ Resources:
       VpcId: !Ref MyVPC
       Port: 80
       Protocol: HTTP
-      Targets:
-        - Id: !Ref MyAutoScalingGroup
-          Port: 80
+      TargetType: instance
 
   MyALB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -128,6 +126,44 @@ Resources:
       DefaultActions:
         - Type: forward
           TargetGroupArn: !Ref MyTargetGroup
+  
+  MyRouteTableA:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+
+  MyRouteTableB:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+
+  MyRouteA:
+    Type: AWS::EC2::Route
+    DependsOn: MyVPCGatewayAttachment
+    Properties:
+      RouteTableId: !Ref MyRouteTableA
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId: !Ref MyInternetGateway
+
+  MyRouteB:
+    Type: AWS::EC2::Route
+    DependsOn: MyVPCGatewayAttachment
+    Properties:
+      RouteTableId: !Ref MyRouteTableB
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId: !Ref MyInternetGateway
+
+  MySubnetARouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref MySubnetA
+      RouteTableId: !Ref MyRouteTableA
+
+  MySubnetBRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref MySubnetB
+      RouteTableId: !Ref MyRouteTableB
 
 Outputs:
   ALBEndpoint:
