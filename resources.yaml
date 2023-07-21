@@ -12,7 +12,7 @@ Parameters:
   AMI:
     Description: Amazon Machine Image ID
     Type: String
-    Default: "ami-0abcdef1234567890"  # Inserisci l'AMI ID desiderato qui
+    Default: "ami-04823729c75214919"  # Inserisci l'AMI ID desiderato qui
 
   InstanceType:
     Description: Type of EC2 instance
@@ -38,6 +38,15 @@ Resources:
         - Key: Environment
           Value: "DevOpsAcademy"
 
+  MyInternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  MyVPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref MyVPC
+      InternetGatewayId: !Ref MyInternetGateway
+      
   MySubnetA:
     Type: AWS::EC2::Subnet
     Properties:
