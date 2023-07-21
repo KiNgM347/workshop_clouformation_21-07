@@ -23,7 +23,7 @@ Parameters:
       - "t2.small"
       - "t3.micro"
       - "t3.small"
-      
+
 Resources:
   MyVPC:
     Type: AWS::EC2::VPC
@@ -32,9 +32,9 @@ Resources:
       EnableDnsSupport: true
       Tags:
         - Key: Nome
-          Value: "tuo name"
+          Value: "Antonio"
         - Key: Cognome
-          Value: "tuo cognome"
+          Value: "Agliano"
         - Key: Environment
           Value: "DevOpsAcademy"
 
