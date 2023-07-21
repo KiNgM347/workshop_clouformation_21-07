@@ -46,7 +46,7 @@ Resources:
     Properties:
       VpcId: !Ref MyVPC
       InternetGatewayId: !Ref MyInternetGateway
-      
+
   MySubnetA:
     Type: AWS::EC2::Subnet
     Properties:
