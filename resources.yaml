@@ -38,11 +38,19 @@ Resources:
         - Key: Environment
           Value: "DevOpsAcademy"
 
-  MySubnet:
+  MySubnetA:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: "10.0.0.0/24"
+      CidrBlock: "10.0.1.0/24"
+      AvailabilityZone: !Select [0, !GetAZs ""]
+
+  MySubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: "10.0.2.0/24"
+      AvailabilityZone: !Select [1, !GetAZs ""]
 
   MySecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -66,11 +74,6 @@ Resources:
           systemctl start httpd
           echo "<?php phpinfo(); ?>" > /var/www/html/index.php
           chkconfig httpd on
-      Tags:
-        - Key: Name
-          Value: MyTaggedEC2Instance
-        - Key: Environment
-          Value: Test
 
   MyAutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -80,7 +83,8 @@ Resources:
       MaxSize: 3
       DesiredCapacity: 1
       VPCZoneIdentifier:
-        - !Ref MySubnet
+        - !Ref MySubnetA
+        - !Ref MySubnetB
 
   MyTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -96,7 +100,8 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets:
-        - !Ref MySubnet
+        - !Ref MySubnetA
+        - !Ref MySubnetB
       SecurityGroups:
         - !Ref MySecurityGroup
 
