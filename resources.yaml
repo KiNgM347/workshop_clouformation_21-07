@@ -12,7 +12,7 @@ Parameters:
   AMI:
     Description: Amazon Machine Image ID
     Type: String
-    Default: "ami-06935448000742e6b"  # Inserisci l'AMI ID desiderato qui
+    Default: "ami-05548f9cecf47b442"  # Inserisci l'AMI ID desiderato qui
 
   InstanceType:
     Description: Type of EC2 instance
@@ -127,29 +127,16 @@ Resources:
         - Type: forward
           TargetGroupArn: !Ref MyTargetGroup
   
-  MyRouteTableA:
+  MyRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref MyVPC
 
-  MyRouteTableB:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId: !Ref MyVPC
-
-  MyRouteA:
+  MyRoute:
     Type: AWS::EC2::Route
     DependsOn: MyVPCGatewayAttachment
     Properties:
-      RouteTableId: !Ref MyRouteTableA
-      DestinationCidrBlock: "0.0.0.0/0"
-      GatewayId: !Ref MyInternetGateway
-
-  MyRouteB:
-    Type: AWS::EC2::Route
-    DependsOn: MyVPCGatewayAttachment
-    Properties:
-      RouteTableId: !Ref MyRouteTableB
+      RouteTableId: !Ref MyRouteTable
       DestinationCidrBlock: "0.0.0.0/0"
       GatewayId: !Ref MyInternetGateway
 
@@ -157,13 +144,13 @@ Resources:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref MySubnetA
-      RouteTableId: !Ref MyRouteTableA
+      RouteTableId: !Ref MyRouteTable
 
   MySubnetBRouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref MySubnetB
-      RouteTableId: !Ref MyRouteTableB
+      RouteTableId: !Ref MyRouteTable
 
 Outputs:
   ALBEndpoint:
