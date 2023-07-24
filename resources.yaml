@@ -12,7 +12,7 @@ Parameters:
   AMI:
     Description: Amazon Machine Image ID
     Type: String
-    Default: "ami-05548f9cecf47b442"  # Inserisci l'AMI ID desiderato qui
+    Default: "ami-04823729c75214919"  # Inserisci l'AMI ID desiderato qui
 
   InstanceType:
     Description: Type of EC2 instance
@@ -95,7 +95,9 @@ Resources:
       LaunchConfigurationName: !Ref MyLaunchConfig
       MinSize: 1
       MaxSize: 3
-      DesiredCapacity: 1
+      DesiredCapacity: 2
+      TargetGroupARNs:
+        - !Ref MyTargetGroup
       VPCZoneIdentifier:
         - !Ref MySubnetA
         - !Ref MySubnetB
